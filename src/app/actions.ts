@@ -53,3 +53,6 @@ export async function getCurrencyRate(currency = TARGET_CURRENCY) {
     return data[currency];
 }
 
+export async function refreshContents() {
+    revalidatePath('/');
+}

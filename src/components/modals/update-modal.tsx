@@ -36,7 +36,7 @@ export default function UpdateModal () {
             open={currentModal === ModalNames.UPDATE_MODAL}
             onClose={closeModal}
         >
-            <DialogTitle>Kayıt Güncelleme</DialogTitle>
+            <DialogTitle>Kayıt Düzeltme</DialogTitle>
             <form onSubmit={onSubmit}>
                 <DialogContent>
                     <DialogContentText>

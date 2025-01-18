@@ -1,13 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import {DataGrid, GridSlotProps, GridToolbarContainer, GridToolbarProps} from '@mui/x-data-grid';
+import {DataGrid, GridSlotProps, GridToolbarContainer} from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import {Contents, contentTableColumns} from "@/components/tables/content-table/columns";
-import {Button} from "@mui/material";
-import PlusIcon from "@/components/icons/plus";
+import {Stack} from "@mui/material";
 import CreateButton from "@/components/buttons/create-button";
 import CopyButton from "@/components/buttons/copy-button";
+import RefreshButton from "@/components/buttons/refresh-button";
 
 type ContentTableProps = {
     rows: Contents[];
@@ -49,7 +49,10 @@ function EditToolbar(props: GridSlotProps['toolbar'] & { data: Contents[] }) {
             height: "56px"
         }}>
             <CreateButton/>
-            <CopyButton contents={data}/>
+            <Stack direction="row" spacing={2}>
+                <RefreshButton/>
+                <CopyButton contents={data}/>
+            </Stack>
         </GridToolbarContainer>
     );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ContentTable from "@/components/tables/content-table";
 import {Contents} from "@/components/tables/content-table/columns";
 import {INITIAL_CURRENCY_MULTIPLIER, LOCAL_STORAGE_KEYS} from "@/constants";
@@ -14,6 +14,8 @@ import CreateModal from "@/components/modals/create-modal";
 import UpdateModal from "@/components/modals/update-modal";
 import DeleteModal from "@/components/modals/delete-modal";
 import {useToast} from "@/providers/toast.provider";
+import {revalidatePath} from "next/cache";
+import {refreshContents} from "@/app/actions";
 
 const darkTheme = createTheme({
     palette: {
@@ -35,6 +37,13 @@ const ContentPage = ({content, rate}: ContentPageProps) => {
     const onCurrencyMultiplierChange = (value: string) => {
         setCurrencyMultiplier(value);
     }
+
+    useEffect(() => {
+        setInterval(() => {
+            refreshContents();
+            // every 5 minutes
+        }, 300000);
+    }, []);
 
     return (
         <ThemeProvider theme={darkTheme}>

@@ -13,7 +13,7 @@ type EditButtonProps = {
 export default function EditButton({data}: EditButtonProps) {
     const {openModal} = useModal();
     return (
-        <Tooltip title="Güncelle">
+        <Tooltip title="Düzelt">
             <IconButton sx={{height: "min-content"}} onClick={() => openModal(ModalNames.UPDATE_MODAL, data)}>
                 <PenIcon width={16} height={16} fill="white"/>
             </IconButton>
