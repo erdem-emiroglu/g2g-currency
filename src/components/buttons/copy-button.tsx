@@ -15,8 +15,9 @@ export default function CopyButton({contents}: CopyButtonProps) {
         const newText = copyTextFormat(data);
         navigator.clipboard.writeText(newText);
     }
+    const isDisabled = contents.length === 0;
     return (
-        <Button sx={{ "& .MuiButton-startIcon": { marginRight: "4px" }}} color="inherit" startIcon={<CopyIcon fill="white" height={16} width={16}/>} onClick={() => handleCopy(contents)}>
+        <Button disabled={isDisabled} sx={{ "& .MuiButton-startIcon": { marginRight: "4px" }}} color="inherit" startIcon={<CopyIcon fill="white" height={16} width={16}/>} onClick={() => handleCopy(contents)}>
             Kayıt ekle
         </Button>
     );
