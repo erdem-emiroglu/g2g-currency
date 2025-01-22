@@ -14,7 +14,6 @@ import CreateModal from "@/components/modals/create-modal";
 import UpdateModal from "@/components/modals/update-modal";
 import DeleteModal from "@/components/modals/delete-modal";
 import {useToast} from "@/providers/toast.provider";
-import {revalidatePath} from "next/cache";
 import {refreshContents} from "@/app/actions";
 
 const darkTheme = createTheme({

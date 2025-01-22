@@ -8,20 +8,20 @@ export default async function Page() {
     const responses = await Promise.all(urlList.map((url) => fetch(url).then((response) => response.json())));
     const currencyRate = await getCurrencyRate();
 
-    const minPrice = priceExtractor(responses[0]?.form)?.[0];
-    const maxPrice = priceExtractor(responses[0]?.form)?.[1];
-    const convertedMinPrice = currencyRate * (minPrice);
-    const convertedMaxPrice = currencyRate * (maxPrice);
+    const minPrice = (index: number) => priceExtractor(responses[index]?.form)?.[0];
+    const maxPrice = (index: number) => priceExtractor(responses[index]?.form)?.[1];
+    const convertedMinPrice = (index: number) => currencyRate * (minPrice(index))
+    const convertedMaxPrice = (index: number) => currencyRate * (maxPrice(index))
 
     const content = urls.map((url, index) => {
         return {
             name: url.name,
             url: url.url,
             id: url.id,
-            priceMin: minPrice,
-            priceMax: maxPrice,
-            priceLocalMin: convertedMinPrice,
-            priceLocalMax: convertedMaxPrice
+            priceMin: minPrice(index),
+            priceMax: maxPrice(index),
+            priceLocalMin: convertedMinPrice(index),
+            priceLocalMax: convertedMaxPrice(index)
         }
     });
 

@@ -1,0 +1,1 @@
+export const urlRegex = /https:\/\/www\.g2g\.com\/checkout\/buyNow\/offerList\?service_id=lgc_service_1&brand_id=lgc_game_\d+&fa=[^&]+&sort=lowest_price.*?&offer_title=[^&]+&group=\d+.*?&offer_id=\d+.*?&total_offer=\d+.*?&page=\d+.*/;

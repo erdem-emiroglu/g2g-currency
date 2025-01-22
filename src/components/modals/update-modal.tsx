@@ -2,19 +2,28 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import {ModalNames, useModal} from "@/providers/modal.provider";
 import {updateUrl} from "@/app/actions";
 import {useToast} from "@/providers/toast.provider";
+import FormInput from "@/components/inputs/form-input";
+import {urlRegex} from "@/constants/regex";
+import {useForm} from "react-hook-form";
+
+type UpdateInputs = {
+    name: string,
+    url: string
+}
 
 export default function UpdateModal () {
     const { currentModal, closeModal, modalProps } = useModal();
     const { openToast } = useToast();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UpdateInputs>()
 
     const { id, name, url } = modalProps;
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const formData = new FormData(form);
-        const name = formData.get("name") as string;
-        const url = formData.get("url") as string;
+    const onSubmit = async (data: UpdateInputs) => {
+        const {name, url} = data;
 
         try {
             await updateUrl(id, url, name);
@@ -37,34 +46,36 @@ export default function UpdateModal () {
             onClose={closeModal}
         >
             <DialogTitle>Kayıt Düzeltme</DialogTitle>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogContent>
                     <DialogContentText>
                         Güncellemek istediğiniz kaydın bilgilerini aşağıdaki alanlardan değiştirebilirsiniz.
                     </DialogContentText>
-                    <TextField
-                        autoFocus
-                        required
-                        defaultValue={name}
-                        margin="dense"
+                    <FormInput
                         id="name"
                         name="name"
                         label="Adı"
-                        type="text"
-                        fullWidth
-                        variant="standard"
+                        register={register}
+                        errors={errors}
+                        defaultValue={name}
+                        validationRules={{
+                            required: 'Ad alanı boş bırakılamaz',
+                        }}
                     />
-                    <TextField
-                        autoFocus
-                        required
-                        defaultValue={url}
-                        margin="dense"
+                    <FormInput
                         id="url"
                         name="url"
                         label="Url"
-                        type="text"
-                        fullWidth
-                        variant="standard"
+                        register={register}
+                        errors={errors}
+                        defaultValue={url}
+                        validationRules={{
+                            required: 'Url alanı boş bırakılamaz',
+                            pattern: {
+                                value: urlRegex,
+                                message: 'Yanlış url formatı',
+                            },
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
